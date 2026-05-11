@@ -1,5 +1,5 @@
 {application, kvs,
-   [{description, "KVS Abstract Chain Database"},
+   [{description, "KVS Key-Value Store Abstraction Layer"},
     {vsn, "13.5.0"},
     {registered, []},
     {applications, [kernel,stdlib]},

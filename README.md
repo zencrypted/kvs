@@ -20,7 +20,7 @@ Usage
 ```
 $ git clone https://github.com/zencrypted/kvs && cd kvs
 $ rebar3 get-deps
-$ rebar3 cr
+$ rebar3 ct
 $ rebar3 shell
 ```
 

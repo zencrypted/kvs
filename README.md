@@ -1,9 +1,10 @@
-KVS: Abstract Chain Database
-============================
+KVS: Key-Value Store Abstraction Layer
+======================================
 
 [![Actions Status](https://github.com/synrc/kvs/workflows/mix/badge.svg)](https://github.com/synrc/kvs/actions)
-[![Build Status](https://travis-ci.com/synrc/kvs.svg?branch=master)](https://travis-ci.com/synrc/kvs)
 [![Hex pm](http://img.shields.io/hexpm/v/kvs.svg?style=flat)](https://hex.pm/packages/kvs)
+
+KVS is optimized for underlying xNVMe SSD Key-Value Store Abstraction Layer (SNIA).
 
 Features
 --------
@@ -11,16 +12,16 @@ Features
 * Polymorphic Tuples aka Extensible Records
 * Basic Schema for Storing Chains
 * Backends: MNESIA, FS, ROCKSDB
-* Extremely Compact: 500 LOC
+* Extremely Compact: 800 LOC
 
 Usage
 -----
 
 ```
-$ git clone https://github.com/synrc/kvs && cd kvs
-$ open man/kvs.htm
-$ mad com pla rep
-> kvs:join().
+$ git clone https://github.com/zencrypted/kvs && cd kvs
+$ rebar3 get-deps
+$ rebar3 cr
+$ rebar3 shell
 ```
 
 Release Notes
@@ -32,6 +33,4 @@ Release Notes
 Credits
 -------
 
-* Maxim Sokhatsky
-* Andrii Zadorozhnii
-* Ivan Kulyk
+* Namdak Tonpa

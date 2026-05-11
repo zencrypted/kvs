@@ -67,7 +67,7 @@ dir(TableName) ->
 hashkey(Key) -> encode(base64:encode(crypto:hash(sha, term_to_binary(Key)))).
 
 delete(TableName, Key, _) ->
-    case kvs_fs:get(TableName, Key) of
+    case kvs_fs:get(TableName, Key, []) of
         {ok,_} ->
             {ok, Dir} = dir(TableName),
             HashKey = hashkey(Key),

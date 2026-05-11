@@ -1,20 +1,35 @@
-name: mix
+name: Continuous Integration
 on: push
+
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  ci:
+    runs-on: ubuntu-latest
+    name: Erlang ${{matrix.otp}} / rebar ${{matrix.rebar3}}
+    strategy:
+      matrix:
+        otp: ['25', '26', '27']
+        rebar3: ['3']
     steps:
-    - uses: actions/checkout@v2
-    - uses: erlef/setup-elixir@v1
-      with:
-        otp-version: 22.x
-        elixir-version: 1.9.x
-    - name: Dependencies
-      run: |
-        mix local.rebar --force
-        mix local.hex --force
-        mix deps.get
-    - name: Compilation
-      run: mix compile
-    - name: Tests
-      run: mix test
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          rebar3-version: ${{matrix.rebar3}}
+      - uses: actions/cache@v4
+        env:
+          cache-name: rebar3
+        with:
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ci-${{runner.os}}-${{env.cache-name}}-otp_${{matrix.otp}}-rebar_${{matrix.rebar3}}-${{hashFiles('rebar.lock')}}
+          restore-keys: |
+            ci-${{runner.os}}-${{env.cache-name}}-otp_${{matrix.otp}}-rebar_${{matrix.rebar3}}
+            ci-${{runner.os}}-${{env.cache-name}}-otp_${{matrix.otp}}
+      - name: Deps
+        run: rebar3 get-deps
+      - name: Compile
+        run: rebar3 compile
+      - name: Test
+        run: rebar3 ct
+

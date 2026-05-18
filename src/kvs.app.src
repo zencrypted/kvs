@@ -1,6 +1,6 @@
 {application, kvs,
    [{description, "KVS Key-Value Store Abstraction Layer"},
-    {vsn, "13.5.0-aleph"},
+    {vsn, "13.5.18-aleph"},
     {registered, []},
     {applications, [kernel,stdlib,mnesia,rocksdb]},
     {mod, { kvs, []}},

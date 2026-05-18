@@ -19,5 +19,5 @@
 -spec add(#writer{}) -> #writer{}.
 -spec append(tuple(),term()) -> any().
 -spec remove(tuple(),term()) -> integer().
--spec cut(term(), list()) -> ok.
+-spec cut(term(), any()) -> ok | ignore | {error, any()}.
 -endif.

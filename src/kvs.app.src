@@ -2,6 +2,6 @@
    [{description, "KVS Key-Value Store Abstraction Layer"},
     {vsn, "13.5.0-aleph"},
     {registered, []},
-    {applications, [kernel,stdlib]},
+    {applications, [kernel,stdlib,mnesia,rocksdb]},
     {mod, { kvs, []}},
     {env, []} ]}.

@@ -4,7 +4,7 @@
 -include("metainfo.hrl").
 -include_lib("stdlib/include/qlc.hrl").
 -export(?BACKEND).
--export([ref/0,ref/1,bt/1,key/2,key/1,fd/1,tb/1,estimate/0,estimate/1]).
+-export([ref/0,ref/1,bt/1,key/2,key/1,fd/1,tb/1,estimate/0,estimate/1,compile/1]).
 -export([seek_it/1, seek_it/2, move_it/3, move_it/4, take_it/4, take_it/5, delete_it/1, delete_it/2]).
 
 e(X,Y) -> element(X,Y).
@@ -140,6 +140,7 @@ join(_,Db)       ->
               initialize(),
               application:set_env(kvs,ref_env(Db),Ref).
 
+-spec compile(it | seek | move | close) -> [function()].
 compile(it)     -> [fun rocksdb:iterator/2];
 compile(seek)   -> [fun rocksdb:iterator/2,fun rocksdb:iterator_move/2];
 compile(move)   -> [fun rocksdb:iterator_move/2];

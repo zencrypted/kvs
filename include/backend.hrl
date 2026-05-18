@@ -5,13 +5,13 @@
                   match/1,key_match/3,index_match/2]).
 -compile({no_auto_import,[get/1,put/2]}).
 -include("kvs.hrl").
--spec put(tuple() | list(tuple())) -> ok | {error,any()}.
--spec put(tuple() | list(tuple()), #kvs{}) -> ok | {error,any()}.
--spec get(term() | any(), any(), #kvs{}) -> {ok,any()} | {error,not_found}.
--spec delete(term(), any(), #kvs{}) -> ok | {error,not_found}.
--spec delete_range(term(), any(), #kvs{}) -> ok | {error,not_found}.
+-spec put(tuple() | list(tuple())) -> ok | {error,any()} | list().
+-spec put(tuple() | list(tuple()), any()) -> ok | {error,any()} | list().
+-spec get(term() | any(), any(), any()) -> {ok,any()} | {error,not_found}.
+-spec delete(term(), any(), any()) -> ok | {error,any()} | {error,not_found}.
+-spec delete_range(term(), any(), any()) -> ok | {error,any()} | {error,not_found}.
 -spec dump() -> ok.
 -spec start() -> ok.
--spec stop() -> ok.
+-spec stop() -> ok | stopped | {error,any()}.
 -spec index(term(), any(), any()) -> list(tuple()).
 -endif.

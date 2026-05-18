@@ -41,6 +41,9 @@ jobs:
       - name: Compile
         run: rebar3 compile
 
+      - name: Dyalizer
+        run: rebar3 dialyzer
+
       - name: Test
         run: rebar3 ct
 

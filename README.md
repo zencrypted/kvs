@@ -21,6 +21,7 @@ Usage
 $ git clone https://github.com/zencrypted/kvs && cd kvs
 $ rebar3 get-deps
 $ rebar3 ct
+$ rebar3 dialyzer
 $ rebar3 shell
 ```
 

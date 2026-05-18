@@ -81,7 +81,7 @@ jobs:
         run: rebar3 compile
 
       - name: Dyalizer
-        run: rebar3 dyzlizer
+        run: rebar3 dialyzer
 
       - name: Test
         run: rebar3 ct

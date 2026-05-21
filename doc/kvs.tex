@@ -1,0 +1,118 @@
+\documentclass[11pt,a4paper]{article}
+
+% Minimal packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\title{The Relevance of Key-Value Stores (KVS) in Document Management, CRM, Chat, and Telecom Systems:\\ An Erlang-Native Approach Aligned with Industrial SSD-Optimized Interfaces}
+\author{Maxim \\ Synrc Research}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Key-Value Stores (KVS) provide a lightweight, high-performance abstraction for data management, particularly suited to write-intensive and stream-oriented workloads. This paper introduces the Synrc KVS library for the Erlang/OTP ecosystem and evaluates its applicability to document management systems (workflow), Customer Relationship Management (CRM), messaging/chat platforms, and telecommunications. We position KVS as a practical, embeddable solution that leverages backends such as RocksDB, drawing conceptual parallels to the SNIA Key Value Storage API 1.1 — the industry-standard interface pioneered in Samsung’s KV-SSD prototypes for direct key-value access to SSDs.
+\end{abstract}
+
+\section{Introduction to KVS}
+
+KVS (Key-Value Store) is a lightweight client-side interface built on B-tree-like database abstractions, designed for straightforward data storage and processing within the Erlang/OTP ecosystem. Developed by Synrc, KVS offers an abstract, compact, and battle-tested API (approximately 500 lines of code) that supports core operations for ledgers, messengers, storage systems, and banking applications.
+
+KVS supports multiple backends, including Mnesia, RocksDB, filesystem (FS), Spandb, and others. This flexibility allows seamless adaptation from embedded systems to high-load servers. The primary modules are:
+
+\begin{itemize}
+    \item \textbf{KVS} — for basic data operations (\texttt{put}, \texttt{get}, \texttt{delete}, \texttt{index}, \texttt{seq}, \texttt{count}, \texttt{dir}).
+    \item \textbf{KVS Stream} — for working with data chains (feeds), cursors (writers/readers), and asynchronous processing.
+\end{itemize}
+
+Thanks to polymorphic (extensible) records and support for chain/tree structures, KVS is ideal for systems where data is organized in sequences or hierarchies. It ensures atomicity, crash resilience, and efficient navigation.
+
+RocksDB, a primary backend for KVS, is a direct descendant of LevelDB and continues the tradition of classic embedded key-value stores such as Berkeley DB. This lineage makes RocksDB significantly more performant than traditional SQL databases for document-oriented workloads requiring high write throughput and low latency. RocksDB employs LSM-trees optimized for SSD writes, reducing write amplification.
+
+This software-level KVS approach aligns conceptually with hardware-accelerated key-value interfaces such as the \textbf{SNIA Key Value Storage API 1.1}, developed to enable direct KV access to SSDs.
+
+\section{API Overview}
+
+\subsection{KVS Module}
+
+\begin{itemize}
+    \item \texttt{put/1}: Stores a record using its ID as the key.
+    \item \texttt{get/2}: Retrieves a record by key from a table.
+    \item \texttt{delete/2}: Deletes a record.
+    \item \texttt{index/3}: Searches records by field and value (RDBMS backends).
+    \item \texttt{seq/2}: Generates a new atomic ID.
+    \item \texttt{count/1}: Counts records in a table.
+    \item \texttt{dir/0}: Returns the list of tables.
+\end{itemize}
+
+The backend is configured via application environment (e.g. \texttt{\{dba, store\_rocks\}}).
+
+\subsection{KVS Stream Module}
+
+\begin{itemize}
+    \item \texttt{writer/1}, \texttt{reader/1}: Create cursors.
+    \item \texttt{save/1}, \texttt{load\_reader/1}: Persist/load cursors.
+    \item \texttt{add/1}, \texttt{append/2}: Add elements to a chain.
+    \item \texttt{next/1}, \texttt{prev/1}, \texttt{top/1}, \texttt{bot/1}: Navigation.
+    \item \texttt{take/1}, \texttt{drop/1}: Extract/skip elements.
+    \item \texttt{remove/2}, \texttt{cut/2}: Remove or truncate chain.
+\end{itemize}
+
+\section{Suitability for Specific Systems}
+
+\subsection{Document Management (Workflow Systems)}
+
+KVS efficiently manages document chains: each document is a record in a feed. The \texttt{add/1} operation appends new stages, while readers track status asynchronously. Polymorphic records support extensible metadata. Atomic \texttt{seq/2} ensures unique IDs.
+
+\subsection{CRM Systems}
+
+Customer interaction histories are modeled as event feeds. \texttt{append/2} adds new events, saved cursors provide personalized views, and field indexing enables fast queries.
+
+\subsection{Chat and Messaging Systems}
+
+KVS Stream is ideal for messaging. Message chains act as feeds with efficient pagination and cursor-based unread tracking. Cursor persistence ensures seamless recovery after restarts.
+
+\subsection{Queues with Cursors for Asynchronous Processing}
+
+KVS implements reliable queues using chains and persistent cursors, supporting high-throughput background job processing in Erlang.
+
+\subsection{Additional Use Cases}
+
+\begin{itemize}
+    \item Arbitrary Feeds (news, event logs)
+    \item Immutable Ledgers and transaction chains
+    \item Logging and time-series data
+    \item Banking applications
+    \item Gaming real-time event feeds
+    \item IoT sensor streams
+    \item Content Management Systems (versioning)
+    \item Social network personalized feeds
+\end{itemize}
+
+\section{Conclusion}
+
+Synrc KVS stands out for its simplicity, flexibility, and deep integration with Erlang/OTP. By providing high-level stream and cursor abstractions on top of efficient KV backends like RocksDB, it embodies principles similar to the SNIA KV API 1.1 — optimized data paths with minimal overhead.
+
+For further details, visit the official documentation: \url{https://kvs.n2o.dev}
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{snia} SNIA Key Value Storage API Specification 1.1.
+\bibitem{samsung} Samsung KV-SSD Technology.
+\bibitem{rocksdb} RocksDB Documentation.
+\end{thebibliography}
+
+\end{document}

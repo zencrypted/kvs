@@ -28,7 +28,7 @@ $ rebar3 shell
 Release Notes
 -------------
 
-* [2014-09-29 KVS Schema Versioning](https://tonpa.guru/stream/2014/2014-09-29%20Версионирование%20схем%20в%20KVS.txt)<br>
+* [2014-09-29 KVS Schema Versioning](https://tonpa.guru/stream/2014/2014-09-29%20Версионирование%20схем%20в%20KVS.txt)
 * [2016-03-29 KVS Intro](https://tonpa.guru/stream/2016/2016-03-29%20KVS%20intro.txt)
 * [2016-09-24 KVS Streams](https://tonpa.guru/stream/2016/2016-09-24%20KVS%20STREAMS.txt)
 * [2017-03-01 KVS for Traders](https://tonpa.guru/stream/2017/2017-03-01%20KVS%20—%20%20DSL%20для%20Алкотрейдинга!.txt)
